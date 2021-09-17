@@ -12,7 +12,7 @@
       </span>
     </div>
 
-    <hr width="500"	size="10" noshade="">
+    <hr class="horizon" width="500"	size="10" noshade="">
 
     <h3>商品一覧</h3>
 
@@ -71,6 +71,11 @@ export default {
 </script>
 
 <style>
+.horizon {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
 
 .pizzaItem{
     

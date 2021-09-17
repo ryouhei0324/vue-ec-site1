@@ -15,7 +15,7 @@
       <div>お値段: {{item.price}} 円</div>
     </div>
 
-    <hr width="500"	size="10" noshade="">
+    <hr class="horizon2" width="500"	size="10" noshade="">
 
     <div>
       サイズを選ぶ
@@ -82,7 +82,6 @@ export default {
   },
 
   methods: {
-
     backPage() {
       this.$router.push({ name:"Search" },()=>{})
     },
@@ -94,3 +93,12 @@ export default {
 
 
 </script>
+
+
+<style>
+.horizon2 {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>

@@ -1,3 +1,4 @@
+
 <template>
   <div id="app">
     <div id="nav">
@@ -13,16 +14,18 @@
       </v-toolbar-items>
     </v-app-bar> 
       <router-link to="/">Home</router-link> |
-      <router-link to="/Search">商品検索</router-link> |
-      <router-link to="/Details">商品詳細ページへ</router-link>
+      <router-link to="/Search">Search</router-link> |
+      <router-link to="/Details">Details</router-link>
     </div>
     <router-view/>
   </div>
 </template>
 
+
 <script>
 // import sidenav from './components/Sidenav.vue'
 import {mapActions} from 'vuex'
+
 
 export default ({
   compnents: {
@@ -32,10 +35,13 @@ export default ({
     ...mapActions(['login','logout'])
   }
 })
+
 </script>
 
 
 <style lang="scss">
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@500;700&display=swap');
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -47,13 +53,42 @@ export default ({
 #nav {
   padding: 30px;
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+  // a {
+  //   font-weight: bold;
+  //   color: #2c3e50;
 
-    &.router-link-exact-active {
+  //   &.router-link-exact-active {
+  //     color: #42b983;
+  //   }
+  // }
+  a {
+  font-family: 'Ubuntu', sans-serif;;
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  color: #2c3e50;
+  text-decoration: none;
+
+      &.router-link-exact-active {
       color: #42b983;
     }
-  }
+}
+
+a:after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color:  #2c3e50;
+  transform: translate(-100%, 0);
+  transition: transform cubic-bezier(0.215, 0.61, 0.355, 1) 0.4s;
+  content: "";
+}
+
+a:hover:after {
+  transform: translate(0, 0);
+}
 }
 </style>
+
