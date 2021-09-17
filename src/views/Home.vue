@@ -1,11 +1,11 @@
 <template>
   <div>
-    <button @click='login'>ログイン</button>
+    <!-- <button @click='login'>ログイン</button>
+    <button @click='logout'>ログアウト</button> -->
   </div>
 </template>
 
 <script>
-
 
 import {mapActions} from 'vuex'
 export default {
@@ -13,7 +13,7 @@ export default {
   components: {
   },
   methods:{
-    ...mapActions(['login'])
+    ...mapActions(['login','logout'])
   }
 }
 </script>

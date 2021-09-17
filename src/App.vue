@@ -1,12 +1,39 @@
 <template>
   <div id="app">
     <div id="nav">
+      <v-app-bar>
+          <v-toolbar-items>
+        <v-btn text @click="shop()">ショッピングカート</v-btn>
+      </v-toolbar-items>
+      <v-toolbar-items>
+        <v-btn text @click="logout">ログアウト</v-btn>
+      </v-toolbar-items>
+      <v-toolbar-items>
+        <v-btn text @click="login">ログイン</v-btn>
+      </v-toolbar-items>
+    </v-app-bar> 
       <router-link to="/">Home</router-link> |
+      <router-link to="/Search">商品検索</router-link> |
       <router-link to="/Details">商品詳細ページへ</router-link>
     </div>
     <router-view/>
   </div>
 </template>
+
+<script>
+// import sidenav from './components/Sidenav.vue'
+import {mapActions} from 'vuex'
+
+export default ({
+  compnents: {
+    // sidenav
+  },
+    methods:{
+    ...mapActions(['login','logout'])
+  }
+})
+</script>
+
 
 <style lang="scss">
 #app {
