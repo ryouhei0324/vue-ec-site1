@@ -4,9 +4,9 @@
       <button @click="backPage()">戻る</button>
     </div>
 
-    <div>
+    <h2>
       商品詳細ページ
-    </div>
+    </h2>
 
     <div>
       <div>商品画像 : {{item.img}}</div>
@@ -54,7 +54,7 @@
     </div>
 
     <div>
-      <button>カートに入れます！</button>
+      <button @click="cartPage">カートに入れます！</button>
     </div>
 
   </div>
@@ -84,8 +84,11 @@ export default {
   methods: {
 
     backPage() {
-      this.$router.push({ name:"/" })
-    }
+      this.$router.push({ name:"Search" },()=>{})
+    },
+    cartPage() {
+      this.$router.push({ name:"Home" },()=>{})
+    },
   }
 }
 
