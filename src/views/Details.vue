@@ -7,13 +7,9 @@
     <h2>商品詳細ページ</h2>
 
     <div>
-      <!-- <div>商品名 : {{ getPizzasById (this.$route.params.id).name }}</div> -->
-      <!-- <div><img :src="require('../assets/img/' + getPizzasById (this.$route.params.id).image)"></div> -->
-      <!-- <div>商品の説明 : {{ getPizzasById (this.$route.params.id).explain }}</div> -->
-      <div><img :src= item.img ></div>
-      <div>商品名 : {{ item.name }}</div>
-      <div>商品画像 : {{ item.img }}</div>
-      <div>商品の説明 : {{ item.topping }}</div>
+      <div>商品名 : {{ getPizzasById (this.$route.params.id).name }}</div>
+      <div><img :src="require('../assets/img/' + getPizzasById (this.$route.params.id).image)"></div>
+      <div>商品の説明 : {{ getPizzasById (this.$route.params.id).explain }}</div>
     </div>
 
     <hr class="horizon2" width="500" size="10" noshade="" />
@@ -44,7 +40,6 @@
 
     <div>
       <div>
-        何個買うのか
         <span class="number"
           >枚数 :
           <select name="num" id="num" @change="totalPrice()">

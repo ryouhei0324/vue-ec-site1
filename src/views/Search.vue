@@ -2,32 +2,27 @@
   <div>
     <h2>商品検索ページ</h2>
 
-    <div>
-      <input type="text" v-model="searchWord" placeholder="検索ワードを入れてね">
-      <span>
-        <button @click="searchItem">🔍</button>
-      </span>
-      <span>
-        <button @click="trush">🗑</button>
-      </span>
-    </div>
+    
+      <input v-model="searchWord" placeholder="検索ワードを入れてね">
+      <button @click="searchItems" class="reserch">🔍</button>
+      <button @click="trush">🗑</button>
 
-    <hr class="horizon" width="500"	size="10" noshade="">
 
     <h3>商品一覧</h3>
-      <div class="pizzaItem" v-for="item in getpizza"  :key="item.id" >
+      <button type="button" @click="expensive">安い順</button>
+      <button type="button" @click="cheap">高い順</button>
+      <div  v-for="item in getpizza"  :key="item.id" >
       <div>商品名 : {{item.name}}</div>
-      <div @click="goDetails">{{item.img}}</div>
-      <div>Mサイズ : {{item.MPrice}} 円</div>
-      <div>Lサイズ : {{item.LPrice}} 円</div>
+      <div @click="goDetails(item.id)"><img :src="require('../assets/img/' + item.image)"></div>
+      <div>Mサイズ : {{item.priceM}} 円</div>
+      <div>Lサイズ : {{item.priceL}} 円</div>
       <div>
-        <button @click="goDetails">商品詳細へ</button>
+        <button @click="goDetails(item.id)">商品詳細へ</button>
       </div>
     </div>
-
-
-
-  </div>
+      <div v-if="getpizza.length==0" class="nasi">該当する商品がありません</div>
+      <div v-if="getpizza.length==0" class="nasi">内容にお間違いがないかもう一度ご確認ください</div>
+    </div>
 </template>
 
 <script>
@@ -37,31 +32,41 @@ export default {
     return {
       searchWord: '',
       itemWord:'',
-
+      newpizza:[]
     }
   },
 
   methods: {
+      ...mapGetters(['getPizzas','getToppings']),
     searchItems(){
       this.itemWord =this.searchWord
     },
     trush() {
-      this.searchWord = '';
+      this.searchWord = ''
     },
-    goDetails() {
-      this.$router.push({ name:"Details" },()=>{})
+    goDetails(id) {
+      this.$router.push({ name:"Details",params:{id} })
+    },
+    expensive(){
+      return this.getPizzas.sort((a,b)=>{
+        return a.priceL-b.priceL
+      })
+    },
+    cheap(){
+      return this.getPizzas.sort((a,b) =>{
+        return b.priceL - a.priceL
+      })
     }
 
   },
   computed:{
     ...mapGetters(['getPizzas','getToppings']),
   getpizza(){
-      if(this.searchWord==''){
-        console.log(this.getPizzas);
-        return [].concat(this.getPizzas)
+      if(this.itemWord==''){
+        return this.newpizza.concat(this.getPizzas)
       }else{
         return this.getPizzas.filter(pizza=>{
-          return pizza.name.indexOf(this.searchWord)>=0
+          return pizza.name.indexOf(this.itemWord)>=0
         })
       }
     }
