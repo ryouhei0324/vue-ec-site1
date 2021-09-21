@@ -10,8 +10,9 @@ export default new Vuex.Store({
     shoppingCart:[],
     itemList:[],
     // firebaseピザ情報
-    toppingList:[]
+    toppingList:[],
     // firebaseトッピング情報
+    Toppings: [{id:1, name:'トマト', priceM:200, priceL:300}]
   },
   mutations: {
     setLoginUser(state, user) {
@@ -26,6 +27,7 @@ export default new Vuex.Store({
     }
 
   },
+
   actions: {
     login() {
       const google_auth_provider = new firebase.auth.GoogleAuthProvider()
@@ -51,6 +53,17 @@ export default new Vuex.Store({
   },
   getters: {
     userName: state=>state.login_user? state.login_user.displayName:'',
-    photoURL: state=>state.login_user? state.login_user.photoURL:''
-  }
+    photoURL: state=>state.login_user? state.login_user.photoURL:'',
+
+
+  
+
+  
+    getPizzas: state => state.Pizzas,
+    getToppings: state => state.Toppings,
+
+    
+    getPizzasById: state => id => state.Pizzas.filter( i => id === i.id)[0] ,
+    getToppingsById: state => id => state.Toppings.filter( i => id === i.id)[0] ,
+  },
 })
