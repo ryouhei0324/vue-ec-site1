@@ -3,8 +3,8 @@
   <div id="app">
     <div id="nav">
       <v-app-bar>
-          <v-toolbar-items>
-        <v-btn text @click="shop()">ショッピングカート</v-btn>
+      <v-toolbar-items>
+        <v-btn to="/Cart">ショッピングカート</v-btn>
       </v-toolbar-items>
       <v-toolbar-items>
         <v-btn text @click="logout">ログアウト</v-btn>
@@ -17,7 +17,8 @@
     <sidenav/>
       <router-link to="/">Home</router-link> |
       <router-link to="/Search">Search</router-link> |
-      <router-link to="/Details">Details</router-link>
+      <router-link to="/Details">Details</router-link>|
+      <router-link to='/cart'>Cart</router-link>
     </div>
     <router-view/>
   </div>

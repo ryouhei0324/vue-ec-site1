@@ -16,6 +16,7 @@ export default new Vuex.Store({
       // {id:2, name:'チーズ', priceM:200, priceL:300}
     ],
     // firebaseトッピング情報
+    cartlist:[],
 
   },
   mutations: {
