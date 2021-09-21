@@ -16,8 +16,7 @@
 
     <sidenav/>
       <router-link to="/">Home</router-link> |
-      <router-link to="/Search">Search</router-link> |
-      <router-link to="/Details">Details</router-link>
+      <router-link to="/Search">Search</router-link>
     </div>
     <router-view/>
   </div>

@@ -11,11 +11,10 @@ export default new Vuex.Store({
     shoppingCart:[],
     itemList:[],
     // firebaseピザ情報
-    Toppings:[
-      // {id:1, name:'トマト', priceM:200, priceL:300},
-      // {id:2, name:'チーズ', priceM:200, priceL:300}
-    ],
+    toppingList:[],
     // firebaseトッピング情報
+    cartItems: {},
+    // カートに入ってる商品
 
   },
   mutations: {
@@ -27,8 +26,14 @@ export default new Vuex.Store({
     },
     fetchItems(state,Item){
       state.itemList=Item.Pizza || state.itemList
-      state.toppings=Item.Topping || state.toppings
-    }
+      state.toppingList=Item.Topping || state.toppingList
+    },
+    setCartItems(state, CItems) {
+      state.cartItems = CItems
+    },
+    // setCartItemList(state, CItemList){      
+    //   state.cartItems.carts.cartItemList = CItemList      
+    // },
 
   },
 
@@ -65,9 +70,9 @@ export default new Vuex.Store({
   
     getPizzas: state => state.itemList,
     getToppings: state => state.toppingList,
+    getPizzasById: state => id => state.itemList.filter( i => id === i.id)[0],
+    getToppingsById: state => id => state.toppingList.filter( i => id === i.id)[0],
 
-    
-    getPizzasById: state => id => state.itemList.filter( i => id === i.id)[0] ,
-    getToppingsById: state => id => state.toppingList.filter( i => id === i.id)[0] ,
+    getCartItems: state => state.cartItems,
   },
 })
