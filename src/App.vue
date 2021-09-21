@@ -43,7 +43,7 @@ export default ({
     this.fetchItems();
     firebase.auth().onAuthStateChanged(user=>{
       if(user){
-        this.setLoginUser(user)
+        this.setLoginUser(user);
       }else{
         this.deleteLoginUser
       }
