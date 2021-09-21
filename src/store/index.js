@@ -11,7 +11,7 @@ export default new Vuex.Store({
     shoppingCart:[],
     itemList:[],
     // firebaseピザ情報
-    Toppings:[
+    toppingList:[
       // {id:1, name:'トマト', priceM:200, priceL:300},
       // {id:2, name:'チーズ', priceM:200, priceL:300}
     ],
@@ -27,7 +27,7 @@ export default new Vuex.Store({
     },
     fetchItems(state,Item){
       state.itemList=Item.Pizza || state.itemList
-      state.toppings=Item.Topping || state.toppings
+      state.toppingList=Item.Topping || state.toppingList
     }
 
   },
