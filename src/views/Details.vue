@@ -126,14 +126,14 @@ computed:{
           p = pizzaSize[i].value * 1;
           if (
             pizzaSize[i].value ==
-            this.getPizzasById(this.$route.params.id).priceM
-            // this.item.priceM
+            // this.getPizzasById(this.$route.params.id).priceM
+            this.item.priceM
           ) {
             this.pSize = "priceM";
           } else if (
             pizzaSize[i].value ==
-            this.getPizzasById(this.$route.params.id).priceL
-            // this.item.priceL
+            // this.getPizzasById(this.$route.params.id).priceL
+            this.item.priceL
           ) {
             this.pSize = "priceL";
           }

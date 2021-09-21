@@ -2,11 +2,16 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import firebase from 'firebase'
 
+
 Vue.use(Vuex)
 
 const initialState = {
   Pizzas: [],
-  Toppings: [{id:1, name:'トマト', priceM:200, priceL:300}],
+  Toppings: [
+    {id:1, name:'トマト', priceM:200, priceL:300},
+    {id:2, name:'チーズ', priceM:200, priceL:300}
+  
+  ],
 }
 
 export default new Vuex.Store({
