@@ -6,18 +6,51 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    login_user:null,
+    shoppingCart:[],
+    itemList:[],
+    // firebaseピザ情報
+    toppingList:[]
+    // firebaseトッピング情報
   },
   mutations: {
+    setLoginUser(state, user) {
+      state.login_user = user
+    },
+    deleteLoginUser(state) {
+      state.login_user = null
+    },
+    fetchItems(state,Item){
+      state.itemList=Item.Pizza
+      state.toppingList=Item.Topping
+    }
+
   },
   actions: {
-    login(){
-    const google_auth_provider = new firebase.auth.GoogleAuthProvider()
-    firebase.auth().signInWithRedirect(google_auth_provider)
+    login() {
+      const google_auth_provider = new firebase.auth.GoogleAuthProvider()
+      firebase.auth().signInWithRedirect(google_auth_provider)
     },
     logout() {
-      firebase.auth().signOut()
+      firebase.auth().signOut();
     },
+    setLoginUser({ commit }, user) {
+      commit("setLoginUser", user);
+    },
+    deleteLoginUser({ commit }) {
+      commit("deleteLoginUser");
+    },
+    fetchItems({commit}){
+      firebase.firestore().collection(`Items`).get().then(querySnapshot=>{
+        querySnapshot.forEach(doc=>{
+          commit('fetchItems',doc.data())
+        })
+      })
+    },
+
   },
-  modules: {
+  getters: {
+    userName: state=>state.login_user? state.login_user.displayName:'',
+    photoURL: state=>state.login_user? state.login_user.photoURL:''
   }
 })
