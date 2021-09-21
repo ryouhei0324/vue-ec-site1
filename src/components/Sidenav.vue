@@ -1,14 +1,14 @@
 <template>
     <div>
         <v-btn color="pink" dark @click.stop="drawer = !drawer">Toggle</v-btn>
-        <v-navigation-drawer v-model="$store.state.drawer" absolute temporary>
+        <v-navigation-drawer v-model="drawer" absolute temporary>
             <v-list>
                 <v-list-item>
                     <v-list-item-avatar>
-                        <!-- <img v-if="photoURL" :src="photoURL" /> -->
+                        <img v-if="photoURL" :src="photoURL" />
                     </v-list-item-avatar>
                     <v-list-item-content>
-                        <v-list-item-title>{{ }}</v-list-item-title>
+                        <v-list-item-title>{{userName}}</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
                 <v-divider></v-divider>
@@ -26,16 +26,21 @@
 </template>
 
 <script>
-// import { defineComponent } from '@vue/composition-api'
+import {mapGetters} from 'vuex'
 
 export default ({
     data() {
          return{
             items:[                
-                { title:"商品検索", icon:"mdi-magnify", link:{ name:"Serch" }},
-                { title:"カート", icon:"mdi-cart", link:{ name:"Cart"}},                
+                { title:"商品検索", icon:"mdi-magnify", link:"/Search" },
+                { title:"カート", icon:"mdi-cart", link:"/Cart"},                
             ],
+            drawer:true
         }
     },
+
+    computed:{
+        ...mapGetters(['userName','photoURL'])
+    }
 })
 </script>

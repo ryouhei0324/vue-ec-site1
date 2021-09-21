@@ -13,6 +13,8 @@
         <v-btn text @click="login">ログイン</v-btn>
       </v-toolbar-items>
     </v-app-bar> 
+
+    <sidenav/>
       <router-link to="/">Home</router-link> |
       <router-link to="/Search">Search</router-link> |
       <router-link to="/Details">Details</router-link>
@@ -23,17 +25,30 @@
 
 
 <script>
-// import sidenav from './components/Sidenav.vue'
+import sidenav from './components/Sidenav.vue'
 import {mapActions} from 'vuex'
+import firebase from "firebase";
 
 
 export default ({
-  compnents: {
-    // sidenav
+  name:'App',
+  components:{
+    sidenav
   },
-    methods:{
-    ...mapActions(['login','logout'])
+  
+  methods:{
+    ...mapActions(['login','logout','setLoginUser','deleteLoginUser'])
+  },
+  created(){
+    firebase.auth().onAuthStateChanged(user=>{
+      if(user){
+        this.setLoginUser(user)
+      }else{
+        this.deleteLoginUser
+      }
+    })
   }
+  
 })
 
 </script>

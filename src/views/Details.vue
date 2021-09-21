@@ -77,9 +77,10 @@
 import { mapGetters } from "vuex"
 
 
+
 export default {
 computed:{
-        ...mapGetters(['getPizzas','getToppings','getPizzasById', 'getToppingsById','getCartItems']),
+        ...mapGetters(['getPizzas','getToppings','getPizzasById', 'getToppingsById']),
     },
 
   data() {
@@ -88,12 +89,9 @@ computed:{
         img: "画像がくるよ",
         pizzaName: "まるげ",
         topping: "ちーずたっぷり、バジル乗ってる",
-        price: 1000,
         priceM: 1500,
         priceL: 2000,
       },
-
-      // topping: ["ちーず", "トマト", "えび"],
 
       pSize:'',
       tSelect:[],
