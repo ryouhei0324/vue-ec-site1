@@ -37,12 +37,13 @@ export default ({
   },
   
   methods:{
-    ...mapActions(['login','logout','setLoginUser','deleteLoginUser'])
+    ...mapActions(['login','logout','setLoginUser','deleteLoginUser','fetchItems'])
   },
   created(){
+    this.fetchItems();
     firebase.auth().onAuthStateChanged(user=>{
       if(user){
-        this.setLoginUser(user)
+        this.setLoginUser(user);
       }else{
         this.deleteLoginUser
       }

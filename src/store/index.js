@@ -22,8 +22,8 @@ export default new Vuex.Store({
       state.login_user = null
     },
     fetchItems(state,Item){
-      state.itemList=Item.Pizza
-      state.toppingList=Item.Topping
+      state.itemList=Item.Pizza || state.itemList
+      state.toppingList=Item.Topping || state.toppingList
     }
 
   },
@@ -59,11 +59,11 @@ export default new Vuex.Store({
   
 
   
-    getPizzas: state => state.Pizzas,
-    getToppings: state => state.Toppings,
+    getPizzas: state => state.itemList,
+    getToppings: state => state.toppingList,
 
     
-    getPizzasById: state => id => state.Pizzas.filter( i => id === i.id)[0] ,
-    getToppingsById: state => id => state.Toppings.filter( i => id === i.id)[0] ,
+    getPizzasById: state => id => state.itemList.filter( i => id === i.id)[0] ,
+    getToppingsById: state => id => state.toppingList.filter( i => id === i.id)[0] ,
   },
 })
