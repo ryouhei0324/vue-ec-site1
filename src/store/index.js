@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import firebase from 'firebase'
 
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -10,9 +11,12 @@ export default new Vuex.Store({
     shoppingCart:[],
     itemList:[],
     // firebaseピザ情報
-    toppingList:[],
+    Toppings:[
+      // {id:1, name:'トマト', priceM:200, priceL:300},
+      // {id:2, name:'チーズ', priceM:200, priceL:300}
+    ],
     // firebaseトッピング情報
-    Toppings: [{id:1, name:'トマト', priceM:200, priceL:300}]
+
   },
   mutations: {
     setLoginUser(state, user) {
@@ -23,7 +27,7 @@ export default new Vuex.Store({
     },
     fetchItems(state,Item){
       state.itemList=Item.Pizza || state.itemList
-      state.toppingList=Item.Topping || state.toppingList
+      state.toppings=Item.Topping || state.toppings
     }
 
   },
@@ -42,10 +46,14 @@ export default new Vuex.Store({
     deleteLoginUser({ commit }) {
       commit("deleteLoginUser");
     },
-    fetchItems({commit}){
-      firebase.firestore().collection(`Items`).get().then(querySnapshot=>{
+    fetchItems({ commit }){
+      firebase
+      .firestore()
+      .collection(`Items`)
+      .get()
+      .then(querySnapshot => {
         querySnapshot.forEach(doc=>{
-          commit('fetchItems',doc.data())
+          commit('fetchItems', doc.data())
         })
       })
     },
@@ -54,10 +62,6 @@ export default new Vuex.Store({
   getters: {
     userName: state=>state.login_user? state.login_user.displayName:'',
     photoURL: state=>state.login_user? state.login_user.photoURL:'',
-
-
-  
-
   
     getPizzas: state => state.itemList,
     getToppings: state => state.toppingList,
