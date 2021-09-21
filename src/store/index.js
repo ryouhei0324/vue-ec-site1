@@ -13,7 +13,7 @@ export default new Vuex.Store({
     // firebaseピザ情報
     toppingList:[],
     // firebaseトッピング情報
-    cartItems: {},
+    cartItems: {name:'いちご'},
     // カートに入ってる商品
 
   },
@@ -31,9 +31,9 @@ export default new Vuex.Store({
     setCartItems(state, CItems) {
       state.cartItems = CItems
     },
-    // setCartItemList(state, CItemList){      
-    //   state.cartItems.carts.cartItemList = CItemList      
-    // },
+    setCartItemList(state, CItemList){      
+      state.cartItems.CartItem.cartItemList = CItemList      
+    },
 
   },
 
@@ -61,6 +61,22 @@ export default new Vuex.Store({
           commit('fetchItems', doc.data())
         })
       })
+    },
+
+    setCartItemList({ getters, commit }, cartItemList ){
+      if(getters.uid){        
+        firebase
+          .firestore()
+          .collection(`users/${getters.uid}/carts`)
+          .doc(getters.getCartItems.id)
+          .update({ cartItemList })          
+          .then( () => {                      
+            commit("setCartItemList", cartItemList );
+          });
+      }else{ //ログインしてなくてもstoreに保存
+        console.log('not login');
+        commit("setCartItemList", cartItemList );
+      }
     },
 
   },

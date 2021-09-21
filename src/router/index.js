@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Details from '../views/Details.vue'
 import Search from '../views/Search.vue'
 import Buy from '../views/Buy.vue'
+import OrderFinish from '../views/OrderFinish.vue'
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,11 @@ const routes = [
     path: '/buy',
     name: 'Buy',
     component: Buy
+  },
+  {
+    path: '/orderFinish',
+    name: 'OrderFinish',
+    component: OrderFinish
   }
 ]
 

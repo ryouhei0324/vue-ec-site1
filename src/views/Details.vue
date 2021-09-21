@@ -109,19 +109,28 @@ computed:{
         alert ("個数を選択してください")
         return
       }
+      console.log(this.$store.state.cartItems)
 
 
 
-    //   let sCIL = this.getCartItems.CartItem ? this.getCartItems.CartItem.cartItemList.concat() : []
-      
-    //   sCIL.push({
-    //     pizzaid: this.$route.params.id, //選んだピザのid
-    //     toppingid: this.tSelect, //選んだトッピングのid
-    //     number: this.number, //個数
-    //     price:  this.pSize, //Mサイズ or Lサイズの値段                
-    //   })
+      // let sCIL = this.getCartItems.CartItem ? this.getCartItems.CartItem.cartItemList.concat() : []  
+      // sCIL.push({
+      //   pizzaid: this.$route.params.id, //選んだピザのid
+      //   toppingid: this.tSelect, //選んだトッピングのid
+      //   number: this.number, //個数
+      //   price:  this.pSize, //Mサイズ or Lサイズの値段                
+      // })
 
-    //   this.setCartItemList(sCIL)
+      let sCIL = {
+        pizzaid: this.$route.params.id, //選んだピザのid
+        toppingid: this.tSelect, //選んだトッピングのid
+        number: this.number, //個数
+        price:  this.pSize, //Mサイズ or Lサイズ               
+      }
+      console.log(sCIL);
+
+      this.setCartItemList(sCIL)
+      console.log(sCIL);
       this.$router.push({ name: "Home" }, () => {});
     },
 
