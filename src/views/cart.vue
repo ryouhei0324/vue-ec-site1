@@ -21,18 +21,18 @@
 
         </tr>
       </thead>
-      <!-- <tbody>
+      <tbody>
         <tr
-          v-for="item in pizza"
-          :key="item.name"
+          v-for="item in gP"
+          :key="item.pizzaid"
         >
-          <td>{{ item.name }}</td>
-          <td>{{ item.calories }}</td>
-          <td>{{ item.name }}</td>
-          <td>{{ item.name }}</td>
+          <td>{{ item.pizzaid }}</td>
+          <td>{{ item.price }}</td>
+          <td>{{ item.number }}</td>
+          <td>{{ item.toppingid }}</td>
           <td>{{ item.name }}</td>
         </tr>
-      </tbody> -->
+      </tbody>
     <!-- <template>
         <div>消費税：{{tax()}}円</div>
         <div>ご注文金額合計：{{total()}}円(税込)</div>
@@ -44,17 +44,31 @@
 </template>
 
 <script>
+import { mapGetters, } from "vuex"
 
 export default ({
+
+    
     data() {
         return{
-            pizza:[]
+            
         }
     },
+    computed:{
+        ...mapGetters(['getPizzas','getToppings','getPizzasById', 'getToppingsById', 'getCartItems']),
 
-    // created(){
-    //     this.pizza.push(this.$store.state.cartlist)
-    // },
+        gP(){			
+		if(this.getCartItems){
+            console.log(this.getCartItems);
+            return this.getCartItems.concat()}	
+		else{return []}					
+		},
+    },
+
+    created(){
+        // this.pizza.push(this.getCartItems)
+        // console.log(this.getCartItems);
+    },
 
     methods:{
         tax(){
