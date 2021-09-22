@@ -15,6 +15,7 @@ export default new Vuex.Store({
     // firebaseトッピング情報
     cartItems: {name:'いちご'},
     // カートに入ってる商品
+    carts: ['みかん'],
 
   },
   mutations: {
@@ -34,6 +35,9 @@ export default new Vuex.Store({
     setCartItemList(state, CItemList){      
       state.cartItems.CartItem.cartItemList = CItemList      
     },
+    addCart(state, humans) {
+      state.carts.push(humans)
+    }
 
   },
 
@@ -79,7 +83,14 @@ export default new Vuex.Store({
       }
     },
 
+    addCart ({ commit }, humans ) {
+      commit ( "addCart", humans )
+    }
+
   },
+
+
+
   getters: {
     userName: state=>state.login_user? state.login_user.displayName:'',
     photoURL: state=>state.login_user? state.login_user.photoURL:'',
@@ -90,5 +101,7 @@ export default new Vuex.Store({
     getToppingsById: state => id => state.toppingList.filter( i => id === i.id)[0],
 
     getCartItems: state => state.cartItems,
+
+    getCarts: state => state.carts
   },
 })

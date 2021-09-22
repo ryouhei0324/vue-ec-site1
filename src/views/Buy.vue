@@ -3,6 +3,18 @@
 
         <h3>商品確認画面</h3>
 
+		<div class="memo" v-for="item in $store.state.carts" :key="item.id">
+			<div>Name : {{ item.name }}</div>
+			<div>email : {{ item.email }}</div>
+			<div>addNumber : {{ item.addNumber }}</div>
+			<div>address : {{ item.address }}</div>
+			<div>tel: {{ item.tel }}</div>
+			<div>orderDate : {{ item.orderDate }}</div>
+			<div>orderTime : {{ item.orderTime }}</div>
+			<div>status : {{ item.status }}</div>
+			
+		</div>
+
         <hr class="horizon3" width="500" size="10" noshade="" />
 
         <div>
@@ -19,12 +31,13 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td>商品名</td>
-                    <td>画像</td>
-                    <td>サイズ</td>
-                    <td>数量</td>
+                    <!-- <td>{{ getPizzasById(item.pizzaid).name }}</td>
+                    <td><img :src="require('../assets/img/' + getPizzasById(item.pizzaid).image)"></td> -->
+					<!-- substr(-1) -> priceM or priceL の最後の文字取ってくる ( M or L ) -->
+                    <!-- <td>{{item.price.substr(-1)}}</td>
+                    <td>{{item.number}}</td>
                     <td>トッピング</td>
-                    <td>価格 (税抜き)</td>
+                    <td>{{ getPizzasById(item.pizzaid)[item.price] }}</td> -->
                 </tr>
                 </tbody>
             </table>
@@ -45,9 +58,9 @@
 						<tbody>
 							<tr>
 								<td>
-									<div>お名前<span className="must" /></div>
+									<div>お名前<span class="must" /></div>
 									<div>
-										<input className="input" type="text" value={userName} onChange={inputUserName} placeholder="カレー太郎" />
+										<input class="input" type="text" v-model="humans.name" placeholder="ピザ太郎" />
 									</div>
 								</td>
 							</tr>
@@ -55,9 +68,9 @@
 
 							<tr>
 								<td>
-									<div>メールアドレス<span className="must" /></div>
+									<div>メールアドレス<span class="must" /></div>
 									<div>
-										<input className="input" type="text" value={mailAddress} onChange={inputMailAddress} placeholder="curry@xxxx.com" />
+										<input class="input" type="text" v-model="humans.email" placeholder="pizza@xxxx.com" />
 									</div>
 								</td>
 							</tr>
@@ -65,28 +78,18 @@
 
 							<tr>
 								<td>
-									<div>郵便番号<span className="must" /></div>
+									<div>郵便番号<span class="must" /></div>
 									<div>
-										<input className="input" type="text" value={addressNumber} onChange={inputAddressNumber} placeholder="160-0022" />
+										<input class="input" type="text" v-model="humans.addNumber" placeholder="160-0022" />
 									</div>
 								</td>
 							</tr>
 
 							<tr>
 								<td>
-									<div>住所<span className="must" /></div>
+									<div>住所<span class="must" /></div>
 									<div>
-										<input className="input" type="text" value={address} onChange={inputAddress} placeholder="東京都新宿区新宿4-3-23 TOKYU REIT  新宿ビル8F" />
-									</div>
-								</td>
-							</tr>
-
-
-							<tr>
-								<td>
-									<div>電話番号<span className="must" /></div>
-									<div>
-										<input className="input" type="text" value={phoneNumber} onChange={inputPhoneNumber} placeholder="000-0000-0000" />
+										<input class="input" type="text" v-model="humans.address" placeholder="東京都新宿区新宿4-3-23 TOKYU REIT  新宿ビル8F" />
 									</div>
 								</td>
 							</tr>
@@ -94,22 +97,32 @@
 
 							<tr>
 								<td>
-									<div>配達日時<span className="must" /></div>
+									<div>電話番号<span class="must" /></div>
 									<div>
-										<input className="input" type="date" value={deliveryDate} onChange={inputDeliveryDate} />
+										<input class="input" type="text" v-model="humans.tel" placeholder="000-0000-0000" />
 									</div>
-									<div className="time">
-										<div className="time-item"><input type="radio" name="time" value="10" onChange={inputDeliveryTime} id="r10" /><label htmlFor="r10">&nbsp;10時</label></div>
-										<div className="time-item"><input type="radio" name="time" value="11" onChange={inputDeliveryTime} id="r11" /><label htmlFor="r11">&nbsp;11時</label></div>
-										<div className="time-item"><input type="radio" name="time" value="12" onChange={inputDeliveryTime} id="r12" /><label htmlFor="r12">&nbsp;12時</label></div>
-										<div className="spacer"></div>
-										<div className="time-item"><input type="radio" name="time" value="13" onChange={inputDeliveryTime} id="r13" /><label htmlFor="r13">&nbsp;13時</label></div>
-										<div className="time-item"><input type="radio" name="time" value="14" onChange={inputDeliveryTime} id="r14" /><label htmlFor="r14">&nbsp;14時</label></div>
-										<div className="time-item"><input type="radio" name="time" value="15" onChange={inputDeliveryTime} id="r15" /><label htmlFor="r15">&nbsp;15時</label></div>
-										<div className="spacer"></div>
-										<div className="time-item"><input type="radio" name="time" value="16" onChange={inputDeliveryTime} id="r16" /><label htmlFor="r16">&nbsp;16時</label></div>
-										<div className="time-item"><input type="radio" name="time" value="17" onChange={inputDeliveryTime} id="r17" /><label htmlFor="r17">&nbsp;17時</label></div>
-										<div className="time-item"><input type="radio" name="time" value="18" onChange={inputDeliveryTime} id="r18" /><label htmlFor="r18">&nbsp;18時</label></div>
+								</td>
+							</tr>
+
+
+							<tr>
+								<td>
+									<div>配達日時<span class="must" /></div>
+									<div>
+										<input class="input" type="date" v-model="humans.orderDate" />
+									</div>
+									<div class="time">
+										<span class="time-item"><input type="radio" name="time" value="10" v-model="humans.orderTime" id="r10" /><label for="r10">&nbsp;10時</label></span>&nbsp;
+										<span class="time-item"><input type="radio" name="time" value="11" v-model="humans.orderTime" id="r11" /><label for="r11">&nbsp;11時</label></span>&nbsp;
+										<span class="time-item"><input type="radio" name="time" value="12" v-model="humans.orderTime" id="r12" /><label for="r12">&nbsp;12時</label></span>
+										<div class="spacer"></div>
+										<span class="time-item"><input type="radio" name="time" value="13" v-model="humans.orderTime" id="r13" /><label for="r13">&nbsp;13時</label></span>&nbsp;
+										<span class="time-item"><input type="radio" name="time" value="14" v-model="humans.orderTime" id="r14" /><label for="r14">&nbsp;14時</label></span>&nbsp;
+										<span class="time-item"><input type="radio" name="time" value="15" v-model="humans.orderTime" id="r15" /><label for="r15">&nbsp;15時</label></span>
+										<div class="spacer"></div>
+										<span class="time-item"><input type="radio" name="time" value="16" v-model="humans.orderTime" id="r16" /><label for="r16">&nbsp;16時</label></span>&nbsp;
+										<span class="time-item"><input type="radio" name="time" value="17" v-model="humans.orderTime" id="r17" /><label for="r17">&nbsp;17時</label></span>&nbsp;
+										<span class="time-item"><input type="radio" name="time" value="18" v-model="humans.orderTime" id="r18" /><label for="r18">&nbsp;18時</label></span>
 									</div>
 								</td>
 							</tr>
@@ -119,7 +132,7 @@
         </div>
 
 
-        <div>お支払い方法</div>
+        <h3>お支払い方法</h3>
 
 				<div>
 					<table>
@@ -127,27 +140,34 @@
 
 							<tr>
 								<td>
-									お支払い方法を選択してください。<span className="must" />
+									お支払い方法を選択してください。<span class="must" />
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<input type="radio" name="pay" value="1" onChange={inputStatus} id="cashOnDelivery" /><label htmlFor="cashOnDelivery">代金引換</label>
+									<input type="radio" name="pay" value="1" id="cashOnDelivery" /><label for="cashOnDelivery">代金引換</label>
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<input type="radio" name="pay" value="2" onChange={inputStatus} id="credit" /><label htmlFor="credit">クレジットカード決済</label>
+									<input type="radio" name="pay" value="2" id="credit" /><label for="credit">クレジットカード決済</label>
 								</td>
 							</tr>
 
 						</tbody>
 					</table>
 				</div>
-        
+
+
+		<div>	
+			<ul>
+				<li v-for="error in Validation" :key="error">{{ error }}</li>
+			</ul>
+		</div>	
+
 
         <div>
-            <button @click="order">注文</button>
+            <button @click="order()">注文</button>
         </div>
 
 
@@ -158,17 +178,150 @@
 
 <script>
 
+import { mapGetters, mapActions } from "vuex"
+
 export default {
 
-    data(){
+	...mapActions(['addCart']),
 
+	computed:{
+	...mapGetters(['getPizzas','getToppings','getCartItems','getPizzasById','getToppingsById','getSelectItem', 'getCarts']),
+	},
+
+    data(){
+		return {
+			humans: {
+				name:'',
+				email:'',
+				addNumber:'',
+				address:'',
+				tel:'',
+				orderDate:'',
+				orderTime:'',
+				status:'',
+			},
+
+			Validation:[],
+		}
     },
 
     methods: {
+		
         order() {
-            this.$router.push({ name: "OrderFinish" }, () => {});
-        }
-    }
+
+			//バリデーション
+		const attmark = new RegExp(/^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/); 
+		const yuubin = new RegExp(/^\d{3}-\d{4}$/);
+		const denwa = new RegExp(/^0\d{1,4}-\d{1,4}-\d{3,4}$/);
+
+		let dt = new Date();
+		let hours = dt.getHours();
+
+		let dateDiff = new Date(this.humans.orderDate).getDate() - dt.getDate();				
+		let time = this.humans.orderTime - hours;						
+		let radios = document.getElementsByName("pay");		
+		for(var i=0; i<radios.length; i++){
+			if (radios[i].checked) {
+				this.humans.status =  radios[i].value;	
+				
+		//  today = new Date(
+		// 	today.getFullYear(), //年
+		// 	today.getMonth(), //月
+		// 	today.getDate(), //日
+		// 	today.getHours(), //時間
+		// )
+
+		// let hopeDate = new Date(this.humans.orderyDate)
+		// let nowDay = today.getDate()
+		// let date = new Date(hopeDate)
+
+		// hopeDate = new Date(
+		// 	today.getMonth(), //月
+		// 	today.getDate(), //日
+		// )
+
+		// let selectDay = date.getDate() //お届け希望の日付
+		// let nowHour = today.getHours() //現在の時間
+		// let i = Math.abs(this.humans.orderyTime - nowHour) //お届け希望の時間 - 今の時間
+
+		// //同じ日の処理
+		// if (nowDay === selectDay) {
+		// 	if (this.humans.orderyTime <= nowHour) {
+		// 		return false
+		// 	} else if (3 <= i) { //今の時間以降の場合
+		// 		return true
+		// 	} else {
+		// 		return false
+		// 	}
+		// }
+
+
+		// //違う日の処理 ( 昨日以前 or 明日以降 )
+		// else if (nowDay >= selectDay) {
+		// 	return false
+		// } else {
+		// 	return true
+		// }		
+		
+		
+		
+		this.Validation = []	  
+		if (this.humans.name == "") { 
+			this.Validation.push ("名前を入力してください")
+		}
+
+		if (this.humans.email == "") {
+			this.Validation.push ("アドレスを入力してください")
+		} else if (!attmark.test(this.humans.email) ) {
+			this.Validation.push("メールアドレスの形式が不正です")
+		}
+
+		if ( this.humans.addNumber == "" ) {
+			this.Validation.push("郵便番号を入力してください")
+		} else if ( !yuubin.test(this.humans.addNumber) ) {
+			this.Validation.push("郵便番号はXXX-XXXXの形式で入力してください")
+		}
+
+		if ( this.humans.address == "" ) {
+			this.Validation.push("住所を入力してください")
+		}
+
+		if ( this.humans.tel == "" ) {
+			this.Validation.push("電話番号を入力してください")
+		} else if ( !denwa.test(this.humans.tel) ) {
+			this.Validation.push ( "電話番号はXXXX-XXXX-XXXXの形式で入力してください" )
+		}
+
+		if ( this.humans.orderDate == "" ) {
+			this.Validation.push("配送日を入力してください" )
+		}
+
+		if ( this.humans.orderTime == 0 ) {
+			this.Validation.push("配送時間を入力してください" )
+		}
+
+		if ( time  <= 3 && dateDiff < 1 ) {
+			this.Validation.push("今から3時間後の日時をご入力ください")
+		}
+
+		if ( this.humans.status == 0 ) {
+			this.Validation.push ("支払い方法を選択してください")
+		}		
+				
+		if(this.Validation.length == 0){
+			console.log('aaa');	
+			console.log(this.humans);		
+			this.addCart(this.humans)
+			console.log('ccc');
+			this.$router.push({ name: "OrderFinish" }, () => {});
+		}
+		console.log(this.$store.state.carts);
+		console.log('bbb');	
+		}
+	}
+		}
+		
+	},
 }
 
 </script>
@@ -177,11 +330,11 @@ export default {
 
 <style>
 .horizon3 {
-  width: 90%;
-  margin-top: 5%;
-  margin-bottom: 5%;
-  margin-left: auto;
-  margin-right: auto;
+	width: 90%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 </style>
