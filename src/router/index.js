@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Details from '../views/Details.vue'
 import Search from '../views/Search.vue'
+import Cart from '../views/cart.vue'
 import Buy from '../views/Buy.vue'
 import OrderFinish from '../views/OrderFinish.vue'
 
@@ -25,6 +26,11 @@ const routes = [
     component: Details
   },
   {
+  path: '/cart',
+  name: 'Cart',
+  component: Cart
+  },
+  {   
     path: '/buy',
     name: 'Buy',
     component: Buy

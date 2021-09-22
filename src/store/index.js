@@ -13,6 +13,7 @@ export default new Vuex.Store({
     // firebaseピザ情報
     toppingList:[],
     // firebaseトッピング情報
+    
     cartItems: {name:'いちご'},
     // カートに入ってる商品
     carts: ['みかん'],
@@ -33,7 +34,7 @@ export default new Vuex.Store({
       state.cartItems = CItems
     },
     setCartItemList(state, CItemList){      
-      state.cartItems.CartItem.cartItemList = CItemList      
+      state.cartItems = CItemList      
     },
     addCart(state, humans) {
       state.carts.push(humans)
@@ -79,6 +80,7 @@ export default new Vuex.Store({
           });
       }else{ //ログインしてなくてもstoreに保存
         console.log('not login');
+        
         commit("setCartItemList", cartItemList );
       }
     },

@@ -17,12 +17,10 @@
     <div>
       サイズ&nbsp;
       <span>
-        <input type="radio" :value="item.priceM" name="size" id="Msize" @click="totalPrice()"/>&nbsp;
-        <label for="Msize">Mサイズ : {{item.priceM}}</label>
+        <span class="valueM"><input type="radio" :value="getPizzasById(this.$route.params.id).priceM" name="size" id="M" @click="totalPrice()"><label for="M"> Mサイズ : {{getPizzasById(this.$route.params.id).priceM}} 円</label></span>
       </span>&nbsp;&nbsp;
       <span>
-        <input type="radio" :value="item.priceL" name="size" id="Lsize" @click="totalPrice()" />&nbsp;
-        <label for="Lsize">Lサイズ : {{item.priceL}} </label>
+         <span class="valueL"><input checked type="radio" :value="getPizzasById(this.$route.params.id).priceL" name="size" id="L" @click="totalPrice()"><label for="L"> Lサイズ : {{getPizzasById(this.$route.params.id).priceL}} 円</label></span>
       </span>
     </div>
 
@@ -71,7 +69,7 @@
 
 
 <script>
-import { mapGetters } from "vuex"
+import { mapGetters,mapActions } from "vuex"
 
 
 
@@ -79,6 +77,9 @@ export default {
 computed:{
         ...mapGetters(['getPizzas','getToppings','getPizzasById', 'getToppingsById', 'getCartItems']),
     },
+    // created(){
+    //   this.$router.push({name:'Search'})
+    // },
 
   data() {
     return {
@@ -99,6 +100,8 @@ computed:{
   },
 
   methods: {
+ ...mapActions(['setCartItemList']), 
+
     backPage() {
       this.$router.push({ name: "Search" }, () => {});
     },
@@ -119,19 +122,20 @@ computed:{
       //   toppingid: this.tSelect, //選んだトッピングのid
       //   number: this.number, //個数
       //   price:  this.pSize, //Mサイズ or Lサイズの値段                
-      // })
+      // }),
 
-      let sCIL = {
+      let sCIL = this.getCartItems.CartItem ? this.getCartItems.CartItem.cartItemList.concat():[]
+        sCIL.push({
         pizzaid: this.$route.params.id, //選んだピザのid
         toppingid: this.tSelect, //選んだトッピングのid
         number: this.number, //個数
         price:  this.pSize, //Mサイズ or Lサイズ               
-      }
+      })
       console.log(sCIL);
 
       this.setCartItemList(sCIL)
-      console.log(sCIL);
-      this.$router.push({ name: "Home" }, () => {});
+      console.log(this.getCartItems);
+      this.$router.push({ name: "Cart" }, () => {});
     },
 
 
@@ -141,22 +145,16 @@ computed:{
       let p = 0;
 
       let pizzaSize = document.getElementsByName("size"); //チェック済みのラジオボタンを調べて値を取得
-
+      console.log(pizzaSize);
       for (let i = 0; i < pizzaSize.length; i++) {
         if (pizzaSize[i].checked) {
           p = pizzaSize[i].value * 1;
-          if (
-            pizzaSize[i].value ==
-            // this.getPizzasById(this.$route.params.id).priceM
-            this.item.priceM
-          ) {
-            this.pSize = "priceM";
-          } else if (
-            pizzaSize[i].value ==
-            // this.getPizzasById(this.$route.params.id).priceL
-            this.item.priceL
-          ) {
+          if ( pizzaSize[i].value == this.getPizzasById(this.$route.params.id).priceM){
+          this.pSize='priceM' 
+          console.log(this.pSize);
+          } else if (pizzaSize[i].value ==this.getPizzasById(this.$route.params.id).priceL){
             this.pSize = "priceL";
+            console.log(this.pSize);
           }
         }
       }
@@ -167,6 +165,7 @@ computed:{
 
       let toppingSelect = document.getElementsByName("topping");
       let tSelect2 = [];
+      console.log(tSelect2);
       for (let j = 0; j < toppingSelect.length; j++) {
         if (toppingSelect[j].checked) {
           p += this.getToppingsById(toppingSelect[j].value * 1)[this.pSize] * 1;
@@ -175,8 +174,8 @@ computed:{
       }
 
       this.tSelect = tSelect2;
-      this.number = document.getElementById("num").selectedIndex;
-
+      this.number = document.getElementById("num").selectedIndex
+      console.log(this.number);
       let price = p * this.number; // 数量×単価
       let tax2 = Math.round(price * tax); //消費税を計算
       let total2 = price + tax2; //税込み合計を計算
