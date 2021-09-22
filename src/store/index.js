@@ -11,12 +11,11 @@ export default new Vuex.Store({
     shoppingCart:[],
     itemList:[],
     // firebaseピザ情報
-    toppingList:[
-      // {id:1, name:'トマト', priceM:200, priceL:300},
-      // {id:2, name:'チーズ', priceM:200, priceL:300}
-    ],
+    toppingList:[],
     // firebaseトッピング情報
-    cartlist:[],
+    
+    cartItems: {name:'いちご'},
+    // カートに入ってる商品
 
   },
   mutations: {
@@ -29,7 +28,13 @@ export default new Vuex.Store({
     fetchItems(state,Item){
       state.itemList=Item.Pizza || state.itemList
       state.toppingList=Item.Topping || state.toppingList
-    }
+    },
+    setCartItems(state, CItems) {
+      state.cartItems = CItems
+    },
+    setCartItemList(state, CItemList){      
+      state.cartItems = CItemList      
+    },
 
   },
 
@@ -59,6 +64,23 @@ export default new Vuex.Store({
       })
     },
 
+    setCartItemList({ getters, commit }, cartItemList ){
+      if(getters.uid){        
+        firebase
+          .firestore()
+          .collection(`users/${getters.uid}/carts`)
+          .doc(getters.getCartItems.id)
+          .update({ cartItemList })          
+          .then( () => {                      
+            commit("setCartItemList", cartItemList );
+          });
+      }else{ //ログインしてなくてもstoreに保存
+        console.log('not login');
+        
+        commit("setCartItemList", cartItemList );
+      }
+    },
+
   },
   getters: {
     userName: state=>state.login_user? state.login_user.displayName:'',
@@ -66,9 +88,9 @@ export default new Vuex.Store({
   
     getPizzas: state => state.itemList,
     getToppings: state => state.toppingList,
+    getPizzasById: state => id => state.itemList.filter( i => id === i.id)[0],
+    getToppingsById: state => id => state.toppingList.filter( i => id === i.id)[0],
 
-    
-    getPizzasById: state => id => state.itemList.filter( i => id === i.id)[0] ,
-    getToppingsById: state => id => state.toppingList.filter( i => id === i.id)[0] ,
+    getCartItems: state => state.cartItems,
   },
 })

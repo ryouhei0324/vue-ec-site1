@@ -21,7 +21,7 @@
 
         </tr>
       </thead>
-      <tbody>
+      <!-- <tbody>
         <tr
           v-for="item in pizza"
           :key="item.name"
@@ -32,12 +32,12 @@
           <td>{{ item.name }}</td>
           <td>{{ item.name }}</td>
         </tr>
-      </tbody>
-    <template>
+      </tbody> -->
+    <!-- <template>
         <div>消費税：{{tax()}}円</div>
         <div>ご注文金額合計：{{total()}}円(税込)</div>
         <button @click="checkOrLogin()" class='btnDig'>注文に進む</button> 
-    </template>
+    </template> -->
     </template>
   </v-simple-table>
   
@@ -52,9 +52,9 @@ export default ({
         }
     },
 
-    created(){
-        this.pizza.push(this.$store.state.cartlist)
-    },
+    // created(){
+    //     this.pizza.push(this.$store.state.cartlist)
+    // },
 
     methods:{
         tax(){

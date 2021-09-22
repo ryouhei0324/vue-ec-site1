@@ -7,25 +7,21 @@
     <h2>商品詳細ページ</h2>
 
     <div>
-      <div>商品名 : {{ item.pizzaName }}</div>
-      <div>商品画像 : {{ item.img }}</div>
-      <div>商品の説明 : {{ item.topping }}</div>
+      <div>商品名 : {{ getPizzasById (this.$route.params.id).name }}</div>
+      <div><img :src="require('../assets/img/' + getPizzasById (this.$route.params.id).image)"></div>
+      <div>商品の説明 : {{ getPizzasById (this.$route.params.id).explain }}</div>
     </div>
 
     <hr class="horizon2" width="500" size="10" noshade="" />
 
     <div>
-      サイズを選ぶ
-      <span
-        ><input type="radio" :value="1500" name="size" id="Msize" @click="totalPrice()"/>&nbsp;<label for="Msize"
-          >Mサイズ : {{item.priceM}}</label
-        ></span
-      >
-      <span
-        ><input type="radio" :value="2000" name="size" id="Lsize" @click="totalPrice()" />&nbsp;<label for="Lsize"
-          >Lサイズ : {{item.priceL}} </label
-        ></span
-      >
+      サイズ&nbsp;
+      <span>
+        <span class="valueM"><input type="radio" :value="getPizzasById(this.$route.params.id).priceM" name="size" id="M" @click="totalPrice()"><label for="M"> Mサイズ : {{getPizzasById(this.$route.params.id).priceM}} 円</label></span>
+      </span>&nbsp;&nbsp;
+      <span>
+         <span class="valueL"><input checked type="radio" :value="getPizzasById(this.$route.params.id).priceL" name="size" id="L" @click="totalPrice()"><label for="L"> Lサイズ : {{getPizzasById(this.$route.params.id).priceL}} 円</label></span>
+      </span>
     </div>
 
     <div>
@@ -42,7 +38,6 @@
 
     <div>
       <div>
-        何個買うのか
         <span class="number"
           >枚数 :
           <select name="num" id="num" @change="totalPrice()">
@@ -74,20 +69,23 @@
 
 
 <script>
-import { mapGetters } from "vuex"
+import { mapGetters,mapActions } from "vuex"
 
 
 
 export default {
 computed:{
-        ...mapGetters(['getPizzas','getToppings','getPizzasById', 'getToppingsById']),
+        ...mapGetters(['getPizzas','getToppings','getPizzasById', 'getToppingsById', 'getCartItems']),
     },
+    // created(){
+    //   this.$router.push({name:'Search'})
+    // },
 
   data() {
     return {
       item: {
-        img: "画像がくるよ",
-        pizzaName: "まるげ",
+        img: "require('../assets/img/1.jpg/')",
+        name: "まるげ",
         topping: "ちーずたっぷり、バジル乗ってる",
         priceM: 1500,
         priceL: 2000,
@@ -102,38 +100,61 @@ computed:{
   },
 
   methods: {
+ ...mapActions(['setCartItemList']), 
+
     backPage() {
       this.$router.push({ name: "Search" }, () => {});
     },
+
+    //カートへ送る情報 pizzaid, toppingid, number(個数), price(トッピング込みのピザの値段)
     cartPage() {
       if (this.number <= 0) {
         alert ("個数を選択してください")
         return
       }
-      this.$router.push({ name: "Home" }, () => {});
+      console.log(this.$store.state.cartItems)
+
+
+
+      // let sCIL = this.getCartItems.CartItem ? this.getCartItems.CartItem.cartItemList.concat() : []  
+      // sCIL.push({
+      //   pizzaid: this.$route.params.id, //選んだピザのid
+      //   toppingid: this.tSelect, //選んだトッピングのid
+      //   number: this.number, //個数
+      //   price:  this.pSize, //Mサイズ or Lサイズの値段                
+      // }),
+
+      let sCIL = this.getCartItems.CartItem ? this.getCartItems.CartItem.cartItemList.concat():[]
+        sCIL.push({
+        pizzaid: this.$route.params.id, //選んだピザのid
+        toppingid: this.tSelect, //選んだトッピングのid
+        number: this.number, //個数
+        price:  this.pSize, //Mサイズ or Lサイズ               
+      })
+      console.log(sCIL);
+
+      this.setCartItemList(sCIL)
+      console.log(this.getCartItems);
+      this.$router.push({ name: "Cart" }, () => {});
     },
+
+
 
     totalPrice() {
       let tax = 0.1; //消費税
       let p = 0;
 
       let pizzaSize = document.getElementsByName("size"); //チェック済みのラジオボタンを調べて値を取得
-
+      console.log(pizzaSize);
       for (let i = 0; i < pizzaSize.length; i++) {
         if (pizzaSize[i].checked) {
           p = pizzaSize[i].value * 1;
-          if (
-            pizzaSize[i].value ==
-            // this.getPizzasById(this.$route.params.id).priceM
-            this.item.priceM
-          ) {
-            this.pSize = "priceM";
-          } else if (
-            pizzaSize[i].value ==
-            // this.getPizzasById(this.$route.params.id).priceL
-            this.item.priceL
-          ) {
+          if ( pizzaSize[i].value == this.getPizzasById(this.$route.params.id).priceM){
+          this.pSize='priceM' 
+          console.log(this.pSize);
+          } else if (pizzaSize[i].value ==this.getPizzasById(this.$route.params.id).priceL){
             this.pSize = "priceL";
+            console.log(this.pSize);
           }
         }
       }
@@ -144,6 +165,7 @@ computed:{
 
       let toppingSelect = document.getElementsByName("topping");
       let tSelect2 = [];
+      console.log(tSelect2);
       for (let j = 0; j < toppingSelect.length; j++) {
         if (toppingSelect[j].checked) {
           p += this.getToppingsById(toppingSelect[j].value * 1)[this.pSize] * 1;
@@ -152,8 +174,8 @@ computed:{
       }
 
       this.tSelect = tSelect2;
-      this.number = document.getElementById("num").selectedIndex;
-
+      this.number = document.getElementById("num").selectedIndex
+      console.log(this.number);
       let price = p * this.number; // 数量×単価
       let tax2 = Math.round(price * tax); //消費税を計算
       let total2 = price + tax2; //税込み合計を計算
