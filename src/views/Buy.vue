@@ -43,8 +43,8 @@
             </table>
         </div>
 
-        <div>消費税 : </div>
-        <div>合計金額 : </div>
+        <div>消費税 : tax</div>
+        <div>合計金額 : tax + totalPrice</div>
 
 
         <hr class="horizon3" width="500" size="10" noshade="" />
@@ -167,7 +167,7 @@
 
 
         <div>
-            <button @click="order()">注文</button>
+            <button @click="order">注文</button>
         </div>
 
 
@@ -185,8 +185,38 @@ export default {
 	...mapActions(['addCart']),
 
 	computed:{
-	...mapGetters(['getPizzas','getToppings','getCartItems','getPizzasById','getToppingsById','getSelectItem', 'getCarts']),
+	...mapGetters(['getPizzas','getToppings','getCartItems','getPizzasById','getToppingsById','getSelectItem', 'getCartItems', 'getCarts']),
+
+	topPrice(){
+			return index => {
+				let cil = this.getCartItems[index]									
+				let total = this.getPizzasById(cil.pizzaid)[cil.price] * 1;				
+				for (let i = 0; i < cil.toppingid.length; i++) {                 
+					total += this.getToppingsById(cil.toppingid[i])[cil.price] * 1;     					      
+				}				
+				
+				return total * cil.number
+			}
 	},
+
+	tax(){
+			return this.sumPrice * 0.1
+	},
+
+	totalPrice(){
+			let cils = this.getCartItems.concat()
+			let total = 0			
+			for (let i = 0; i < cils.length; i++) {
+				total += this.getPizzasById(cils[i].pizzaid)[cils[i].price] * cils[i].number;
+				for (let j = 0; j < cils[i].toppingid.length; j++) {
+					total += this.getToppingsById(cils[i].toppingid[j])[cils[i].price] * cils[i].number;
+				}											
+			}
+			return total
+	},
+	
+	},
+
 
     data(){
 		return {
