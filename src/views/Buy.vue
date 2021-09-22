@@ -17,16 +17,16 @@
 
         <hr class="horizon3" width="500" size="10" noshade="" />
 
-        <div>
-            <table>
+        <div class="box1-framework">
+            <table class="box1">
                 <thead>
                 <tr>
-                    <th>商品名</th>
-                    <th>画像</th>
-                    <th>サイズ</th>
-                    <th>数量</th>
-                    <th>トッピング</th>
-                    <th>価格 (税抜き)</th>
+                    <th class="box1-title">商品名</th>
+                    <th class="box1-title">画像</th>
+                    <th class="box1-title">サイズ</th>
+                    <th class="box1-title">数量</th>
+                    <th class="box1-title">トッピング</th>
+                    <th class="box1-title">価格 (税抜き)</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -50,10 +50,10 @@
         <hr class="horizon3" width="500" size="10" noshade="" />
 
 
-        <h3>お届け先情報</h3>
+        <div class="box1">
+			<div class="box1-title">お届け先情報</div>
 
-        <div>
-
+			<div class="form">
 					<table>
 						<tbody>
 							<tr>
@@ -129,10 +129,12 @@
 
 						</tbody>
 					</table>
+				</div>
         </div>
 
 
-        <h3>お支払い方法</h3>
+        <div class="box1">
+			<div class="box1-title">お支払い情報</div>
 
 				<div>
 					<table>
@@ -145,18 +147,19 @@
 							</tr>
 							<tr>
 								<td>
-									<input type="radio" name="pay" value="1" id="cashOnDelivery" /><label for="cashOnDelivery">代金引換</label>
+									<input type="radio" name="pay" value="1" id="cashOnDelivery" /><label for="cashOnDelivery">&nbsp;代金引換</label>
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<input type="radio" name="pay" value="2" id="credit" /><label for="credit">クレジットカード決済</label>
+									<input type="radio" name="pay" value="2" id="credit" /><label for="credit">&nbsp;クレジットカード決済</label>
 								</td>
 							</tr>
 
 						</tbody>
 					</table>
 				</div>
+		</div>
 
 
 		<div>	
@@ -366,5 +369,66 @@ export default {
     margin-left: auto;
     margin-right: auto;
 }
+
+.form {
+	text-align: center;
+	margin-left: auto;
+}
+.box1 {
+    margin: 2em 0;
+    background: #dcefff;
+	margin-left: auto;
+	margin-right: auto;
+	width: 80%;
+}
+.box1-title {
+    font-size: 1.2em;
+    background: #5fb3f5;
+    padding: 4px;
+    text-align: center;
+    color: #FFF;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+}
+
+.must::after {
+    content: "必須";
+    background-color: #f0564e;
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    min-width: 10px;
+    padding: 3px 7px;
+    margin: 0px 5px;
+    line-height: 1;
+    vertical-align: middle;
+    white-space: nowrap;
+    text-align: center;
+    border-radius: 10px;
+    display: inline-block;
+}
+
+.input {
+    border: none; 
+    margin-bottom: 2%;
+	background-color: #FFF;
+}
+
+.input:hover {
+    border: 1px solid #0094ff;
+}
+
+/* .time {
+    display: flex;
+    flex-wrap: wrap;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.time-item {
+    margin-bottom: 1%;
+    margin-right: 2%;
+} */
 
 </style>

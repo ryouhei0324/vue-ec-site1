@@ -3,6 +3,7 @@
   <div id="app">
     <div id="nav">
       <v-app-bar>
+        <router-link to="/"><img class="header-logo" src="./assets/img/header_logo.png"></router-link>
       <v-toolbar-items>
         <v-btn to="/Cart">ショッピングカート</v-btn>
       </v-toolbar-items>
@@ -106,6 +107,10 @@ a:after {
 a:hover:after {
   transform: translate(0, 0);
 }
+}
+
+.header-logo {
+  width: 100%;
 }
 </style>
 

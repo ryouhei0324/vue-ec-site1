@@ -14,13 +14,13 @@
                     </div>
 
       <div>
-        <h2>ラクラクカリーをご利用頂きましてありがとうございます。</h2>
+        <h2>ラクラクピザをご利用頂きましてありがとうございます。</h2>
         <h3>決済は正常に完了しました。</h3>
       </div>
     </div>
 
-    <div>
-      <button @click="backHome">戻る</button>
+    <div class="button-position">
+      <button class="button" @click="backHome">戻る</button>
     </div>
 
 
@@ -74,6 +74,7 @@ export default {
 
 .icon-line {
     text-align: center;
+    margin-bottom: 3%;
 
 }
 
@@ -84,12 +85,12 @@ export default {
 
 .button-position {
     text-align: center;
+    margin-top: 5%;
 }
 
 .button {
     width: 12%;
     height: 40px;
-    margin-top: 5%;
     margin-bottom: 5%;
     background: transparent;
     border: none; 

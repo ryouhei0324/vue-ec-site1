@@ -20,7 +20,7 @@
         <span class="valueM"><input type="radio" :value="getPizzasById(this.$route.params.id).priceM" name="size" id="M" @click="totalPrice()"><label for="M"> Mサイズ : {{getPizzasById(this.$route.params.id).priceM}} 円</label></span>
       </span>&nbsp;&nbsp;
       <span>
-         <span class="valueL"><input checked type="radio" :value="getPizzasById(this.$route.params.id).priceL" name="size" id="L" @click="totalPrice()"><label for="L"> Lサイズ : {{getPizzasById(this.$route.params.id).priceL}} 円</label></span>
+        <span class="valueL"><input checked type="radio" :value="getPizzasById(this.$route.params.id).priceL" name="size" id="L" @click="totalPrice()"><label for="L"> Lサイズ : {{getPizzasById(this.$route.params.id).priceL}} 円</label></span>
       </span>
     </div>
 
