@@ -17,6 +17,9 @@ export default new Vuex.Store({
     cartItems: {},
     // カートに入ってる商品
 
+    carts: [],
+    //お支払い情報を入れたカート
+
   },
   mutations: {
     setLoginUser(state, user) {
@@ -35,6 +38,9 @@ export default new Vuex.Store({
     setCartItemList(state, CItemList){      
       state.CartItems.CartItem.cartItemList = CItemList      
     },
+    addCart(state, item) {
+      state.carts.push(item)
+    }
 
   },
 
@@ -81,7 +87,14 @@ export default new Vuex.Store({
       }
     },
 
+    addCart ({ commit }, item ) {
+      commit ( "addCart", item )
+    }
+
   },
+
+
+
   getters: {
     userName: state=>state.login_user? state.login_user.displayName:'',
     photoURL: state=>state.login_user? state.login_user.photoURL:'',
@@ -93,5 +106,7 @@ export default new Vuex.Store({
     getToppingsById: state => id => state.toppingList.filter( i => id === i.id)[0],
 
     getCartItems: state => state.cartItems,
+
+    getCarts: state => state.carts
   },
 })

@@ -3,6 +3,7 @@
   <div id="app">
     <div id="nav">
       <v-app-bar>
+        <router-link to="/"><img class="header-logo" src="./assets/img/header_logo.png"></router-link>
       <v-toolbar-items>
         <v-btn to="/Cart">ショッピングカート</v-btn>
       </v-toolbar-items>
@@ -12,12 +13,14 @@
       <v-toolbar-items>
         <v-btn text @click="login">ログイン</v-btn>
       </v-toolbar-items>
+      <v-toolbar-items>
+        <v-btn text @click="test">テスト</v-btn>
+      </v-toolbar-items>
     </v-app-bar> 
 
     <sidenav/>
       <router-link to="/">Home</router-link> |
       <router-link to="/Search">Search</router-link> |
-      <router-link to="/Details">Details</router-link>|
       <router-link to='/cart'>Cart</router-link>
     </div>
     <router-view/>
@@ -38,9 +41,11 @@ export default ({
   },
   
   methods:{
-    ...mapActions(['login','logout','setLoginUser','deleteLoginUser','fetchItems'])
-  
+    ...mapActions(['login','logout','setLoginUser','deleteLoginUser','fetchItems']),
 
+    test() {
+    console.log(this.$store.state);
+  }
   },
   created(){
     this.fetchItems();
@@ -51,7 +56,8 @@ export default ({
         this.deleteLoginUser
       }
     })
-  }
+  },
+  
   
 })
 
@@ -108,6 +114,10 @@ a:after {
 a:hover:after {
   transform: translate(0, 0);
 }
+}
+
+.header-logo {
+  width: 100%;
 }
 </style>
 

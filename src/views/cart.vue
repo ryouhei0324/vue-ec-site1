@@ -26,26 +26,27 @@
           v-for="(item,index) in gP"
           :key="index"
         >
-          <td>{{ getPizzasById(item.pizzaid).name }}
-         <!-- <img class="pizzaimage" :src="require('../assets/img/' + getPizzasById(item.pizzaid).image)" >							 -->
-         </td>
+          <td>{{ getPizzasById (item.pizzaid).name }}
+            <div><img :src="require('../assets/img/' + getPizzasById (item.pizzaid).image)"></div>
+          </td>
           <td>{{ item.price }}</td>
           <td>{{ item.number }}</td>
-            <td>
-              <li v-for='top in item.toppingid' :key="top.id">{{getToppingsById(top).name}}</li>
-            </td>
-          <td>{{ topPrice(index) }}</td>
-          <td><button type='submit' @click="deleteItem(index)">削除</button></td>
+          <td>
+            <!-- {{ item.toppingid }} -->
+            <li v-for="(tid,i) in item.toppingid" :key="tid + i">{{getToppingsById(tid).name}}</li>
+          </td>
+          <td>{{ item.name }}</td>
         </tr>
       </tbody>
-        <template v-if="!sumPrice==0" >
-            <div>消費税：{{taxP}}円</div>
-            <div>ご注文金額合計：{{`${taxP+sumPrice}`}}円(税込)</div>
-            <input class="form-control btn btn-warning btn-block" type="submit" value="注文に進む" @click="gotoLink">
-        </template>
-        <template v-if="sumPrice">
-            <h3>商品がありません</h3>
-        </template>
+
+      <div>
+        <input type="button" value="注文に進む" @click="gotoLink">
+      </div>
+    <!-- <template>
+        <div>消費税：{{tax()}}円</div>
+        <div>ご注文金額合計：{{total()}}円(税込)</div>
+        <button @click="checkOrLogin()" class='btnDig'>注文に進む</button> 
+    </template> -->
     </template>
   </v-simple-table>
   
@@ -122,17 +123,23 @@ export default ({
             this.setCartItemList(this.gP)
 
         },
+        total(){
+            let total=[]
+            this.pizza[0].cartlist.forEach(element => {
+                total.push(element.total*1.1)
+            });
+            let totals =total.reduce((sum,element)=>{
+                return sum + element;
+            },0)
+            return Math.floor(totals)
+        },
 
-		gotoLink(){			
-			if(this.uid){
-				this.$router.push({name:'OrderFinish'})
-			}else{				
-				alert('ログイン画面に移ります')
-				this.login(true)
-			}			
-		},        
-
-
+        gotoLink(){
+            this.$router.push({name:'Buy'})
+            // } else {				
+            //   alert ('ログイン画面に移ります')
+            //   this.login(true)
+        },
     }
 })
 </script>
