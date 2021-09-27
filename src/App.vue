@@ -39,6 +39,8 @@ export default ({
   
   methods:{
     ...mapActions(['login','logout','setLoginUser','deleteLoginUser','fetchItems'])
+  
+
   },
   created(){
     this.fetchItems();

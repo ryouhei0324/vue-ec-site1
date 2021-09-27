@@ -112,7 +112,7 @@ computed:{
         alert ("個数を選択してください")
         return
       }
-      console.log(this.$store.state.cartItems)
+      
 
 
 

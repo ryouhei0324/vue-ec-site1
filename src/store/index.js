@@ -14,7 +14,7 @@ export default new Vuex.Store({
     toppingList:[],
     // firebaseトッピング情報
     
-    cartItems: {name:'いちご'},
+    cartItems: {},
     // カートに入ってる商品
 
   },
@@ -33,7 +33,7 @@ export default new Vuex.Store({
       state.cartItems = CItems
     },
     setCartItemList(state, CItemList){      
-      state.cartItems = CItemList      
+      state.CartItems.CartItem.cartItemList = CItemList      
     },
 
   },
@@ -85,7 +85,8 @@ export default new Vuex.Store({
   getters: {
     userName: state=>state.login_user? state.login_user.displayName:'',
     photoURL: state=>state.login_user? state.login_user.photoURL:'',
-  
+    // uid: state => state.login_user ? state.login_user.uid : null,    
+
     getPizzas: state => state.itemList,
     getToppings: state => state.toppingList,
     getPizzasById: state => id => state.itemList.filter( i => id === i.id)[0],
