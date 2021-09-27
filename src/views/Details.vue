@@ -58,9 +58,17 @@
       <div>合計金額 : {{finalPrice[2]}} 円</div>
     </div>
 
+    <hr class="horizon2" width="500" size="10" noshade="" />
+
     <div>
-      <button @click="cartPage">カートに入れます！</button>
+      <button class="cP" @click="cartPage">カートに入れます！</button>
     </div>
+
+    <div class="Page-Btn" @click="scrollTop">
+      <img class="scrollImg" src="https://jbit.bufs.ac.kr/~group2002s2/image/upmark.png">
+    </div>
+
+
   </div>
 </template>
 
@@ -186,6 +194,13 @@ computed:{
       this.finalPrice = data;
     },
 
+    scrollTop: function () {
+            window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        });
+    },
+
   },
 };
 </script>
@@ -196,5 +211,26 @@ computed:{
   width: 90%;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 5%;
+  margin-bottom: 5%;
 }
+
+.cP {
+  margin-bottom: 10%;
+}
+
+.Page-Btn {
+    position: fixed;
+    right: 7%;
+    bottom: 12%;
+    width: 20px;
+    height: 30px;
+}
+.scroll {
+    color: rgb(241, 237, 233);
+}
+.scrollImg {
+    width: 300%;
+}
+
 </style>

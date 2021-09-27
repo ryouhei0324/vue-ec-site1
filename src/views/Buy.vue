@@ -3,18 +3,6 @@
 
         <h3>商品確認画面</h3>
 
-		<div class="memo" v-for="item in $store.state.carts" :key="item.id">
-			<div>Name : {{ item.name }}</div>
-			<div>email : {{ item.email }}</div>
-			<div>addNumber : {{ item.addNumber }}</div>
-			<div>address : {{ item.address }}</div>
-			<div>tel: {{ item.tel }}</div>
-			<div>orderDate : {{ item.orderDate }}</div>
-			<div>orderTime : {{ item.orderTime }}</div>
-			<div>status : {{ item.status }}</div>
-			
-		</div>
-
         <hr class="horizon3" width="500" size="10" noshade="" />
 
         <div class="box1-framework">
@@ -30,7 +18,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
+                <tr v-for="item in gP" :key="item.pizzaid">
                     <!-- <td>{{ getPizzasById(item.pizzaid).name }}</td>
                     <td><img :src="require('../assets/img/' + getPizzasById(item.pizzaid).image)"></td> -->
 					<!-- substr(-1) -> priceM or priceL の最後の文字取ってくる ( M or L ) -->
@@ -38,13 +26,19 @@
                     <td>{{item.number}}</td>
                     <td>トッピング</td>
                     <td>{{ getPizzasById(item.pizzaid)[item.price] }}</td> -->
+					<td>{{ getPizzasById (item.pizzaid).name }}</td>
+					<td><img :src="require('../assets/img/' + getPizzasById (item.pizzaid).image)"></td>
+					<td>{{ item.price.substr(-1) }}</td>
+					<td>{{ item.number }}</td>
+					<td><div v-for="(tid,i) in item.toppingid" :key="tid + i">{{getToppingsById(tid).name}}</div></td>
+					<td>totalPrice</td>
                 </tr>
                 </tbody>
             </table>
         </div>
 
-        <div>消費税 : tax</div>
-        <div>合計金額 : tax + totalPrice</div>
+        <div>消費税 : tax </div>
+        <div>合計金額 : tax + totalPrice </div>
 
 
         <hr class="horizon3" width="500" size="10" noshade="" />
@@ -89,7 +83,7 @@
 								<td>
 									<div>住所<span class="must" /></div>
 									<div>
-										<input class="input" type="text" v-model="humans.address" placeholder="東京都新宿区新宿4-3-23 TOKYU REIT  新宿ビル8F" />
+										<input class="input" type="text" v-model="humans.address" placeholder="東京都新宿区新宿4-3-23" />
 									</div>
 								</td>
 							</tr>
@@ -170,7 +164,7 @@
 
 
         <div>
-            <button @click="order">注文</button>
+            <button class="order" @click="order">注文</button>
         </div>
 
 
@@ -185,10 +179,16 @@ import { mapGetters, mapActions } from "vuex"
 
 export default {
 
-	...mapActions(['addCart']),
 
 	computed:{
 	...mapGetters(['getPizzas','getToppings','getCartItems','getPizzasById','getToppingsById','getSelectItem', 'getCartItems', 'getCarts']),
+
+	gP(){			
+		if(this.getCartItems){
+            console.log(this.getCartItems);
+            return this.getCartItems.concat()}	
+		else { return [] }					
+		},
 
 	topPrice(){
 			return index => {
@@ -238,7 +238,11 @@ export default {
 		}
     },
 
+
     methods: {
+
+
+		...mapActions(['addCart']),
 		
         order() {
 
@@ -256,52 +260,13 @@ export default {
 		for(var i=0; i<radios.length; i++){
 			if (radios[i].checked) {
 				this.humans.status =  radios[i].value;	
-				
-		//  today = new Date(
-		// 	today.getFullYear(), //年
-		// 	today.getMonth(), //月
-		// 	today.getDate(), //日
-		// 	today.getHours(), //時間
-		// )
-
-		// let hopeDate = new Date(this.humans.orderyDate)
-		// let nowDay = today.getDate()
-		// let date = new Date(hopeDate)
-
-		// hopeDate = new Date(
-		// 	today.getMonth(), //月
-		// 	today.getDate(), //日
-		// )
-
-		// let selectDay = date.getDate() //お届け希望の日付
-		// let nowHour = today.getHours() //現在の時間
-		// let i = Math.abs(this.humans.orderyTime - nowHour) //お届け希望の時間 - 今の時間
-
-		// //同じ日の処理
-		// if (nowDay === selectDay) {
-		// 	if (this.humans.orderyTime <= nowHour) {
-		// 		return false
-		// 	} else if (3 <= i) { //今の時間以降の場合
-		// 		return true
-		// 	} else {
-		// 		return false
-		// 	}
-		// }
-
-
-		// //違う日の処理 ( 昨日以前 or 明日以降 )
-		// else if (nowDay >= selectDay) {
-		// 	return false
-		// } else {
-		// 	return true
-		// }		
 		
 		
-		
+
 		this.Validation = []	  
-		if (this.humans.name == "") { 
-			this.Validation.push ("名前を入力してください")
-		}
+		// if (this.humans.name == "") { 
+		// 	this.Validation.push ("名前を入力してください")
+		// }
 
 		if (this.humans.email == "") {
 			this.Validation.push ("アドレスを入力してください")
@@ -341,8 +306,8 @@ export default {
 			this.Validation.push ("支払い方法を選択してください")
 		}		
 				
-		if(this.Validation.length == 0){
-			console.log('aaa');	
+		if(this.Validation.length == 0) {
+			console.log('aaa');
 			console.log(this.humans);		
 			this.addCart(this.humans)
 			console.log('ccc');
@@ -368,18 +333,24 @@ export default {
     margin-bottom: 5%;
     margin-left: auto;
     margin-right: auto;
+	margin-top: 5%;
+	margin-bottom: 5%;
 }
 
 .form {
 	text-align: center;
-	margin-left: auto;
+	margin-left: 10%;
+	margin-top: 5%;
 }
 .box1 {
     margin: 2em 0;
     background: #dcefff;
 	margin-left: auto;
 	margin-right: auto;
-	width: 80%;
+	width: 70%;
+	margin-top: 5%;
+	margin-bottom: 10%;
+	padding-bottom: 3%;
 }
 .box1-title {
     font-size: 1.2em;
@@ -409,8 +380,10 @@ export default {
 }
 
 .input {
+	width: 120%;
     border: none; 
-    margin-bottom: 2%;
+	/* margin-top: 5%; */
+    margin-bottom: 5%;
 	background-color: #FFF;
 }
 
@@ -430,5 +403,26 @@ export default {
     margin-bottom: 1%;
     margin-right: 2%;
 } */
+
+
+.order {
+    width: 10%;
+    height: 40px;
+    margin-bottom: 5%;
+    background: transparent;
+    border: none; 
+    border-radius: 5px;
+    color: rgb(59, 55, 50);
+    font-size:14px;
+    text-align: center;
+    cursor: pointer;
+	margin-top: 3%;
+	margin-bottom: 10%;
+}
+
+.order:hover {
+    background-color: #ada49f;
+    color: white;
+}
 
 </style>

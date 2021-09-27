@@ -26,13 +26,22 @@
           v-for="item in gP"
           :key="item.pizzaid"
         >
-          <td>{{ item.pizzaid }}</td>
+          <td>{{ getPizzasById (item.pizzaid).name }}
+            <div><img :src="require('../assets/img/' + getPizzasById (item.pizzaid).image)"></div>
+          </td>
           <td>{{ item.price }}</td>
           <td>{{ item.number }}</td>
-          <td>{{ item.toppingid }}</td>
+          <td>
+            <!-- {{ item.toppingid }} -->
+            <li v-for="(tid,i) in item.toppingid" :key="tid + i">{{getToppingsById(tid).name}}</li>
+          </td>
           <td>{{ item.name }}</td>
         </tr>
       </tbody>
+
+      <div>
+        <input type="button" value="注文に進む" @click="gotoLink">
+      </div>
     <!-- <template>
         <div>消費税：{{tax()}}円</div>
         <div>ご注文金額合計：{{total()}}円(税込)</div>
@@ -92,7 +101,14 @@ export default ({
                 return sum + element;
             },0)
             return Math.floor(totals)
-        }
+        },
+
+        gotoLink(){
+            this.$router.push({name:'Buy'})
+            // } else {				
+            //   alert ('ログイン画面に移ります')
+            //   this.login(true)
+        },
     }
 })
 </script>

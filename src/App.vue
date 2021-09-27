@@ -13,12 +13,14 @@
       <v-toolbar-items>
         <v-btn text @click="login">ログイン</v-btn>
       </v-toolbar-items>
+      <v-toolbar-items>
+        <v-btn text @click="test">テスト</v-btn>
+      </v-toolbar-items>
     </v-app-bar> 
 
     <sidenav/>
       <router-link to="/">Home</router-link> |
       <router-link to="/Search">Search</router-link> |
-      <router-link to="/Details">Details</router-link>|
       <router-link to='/cart'>Cart</router-link>
     </div>
     <router-view/>
@@ -39,7 +41,11 @@ export default ({
   },
   
   methods:{
-    ...mapActions(['login','logout','setLoginUser','deleteLoginUser','fetchItems'])
+    ...mapActions(['login','logout','setLoginUser','deleteLoginUser','fetchItems']),
+
+    test() {
+    console.log(this.$store.state);
+  }
   },
   created(){
     this.fetchItems();
@@ -50,7 +56,8 @@ export default ({
         this.deleteLoginUser
       }
     })
-  }
+  },
+  
   
 })
 

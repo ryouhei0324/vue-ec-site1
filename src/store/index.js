@@ -16,7 +16,9 @@ export default new Vuex.Store({
     
     cartItems: {name:'いちご'},
     // カートに入ってる商品
-    carts: ['みかん'],
+
+    carts: [],
+    //お支払い情報を入れたカート
 
   },
   mutations: {
@@ -36,8 +38,8 @@ export default new Vuex.Store({
     setCartItemList(state, CItemList){      
       state.cartItems = CItemList      
     },
-    addCart(state, humans) {
-      state.carts.push(humans)
+    addCart(state, item) {
+      state.carts.push(item)
     }
 
   },
@@ -85,8 +87,8 @@ export default new Vuex.Store({
       }
     },
 
-    addCart ({ commit }, humans ) {
-      commit ( "addCart", humans )
+    addCart ({ commit }, item ) {
+      commit ( "addCart", item )
     }
 
   },

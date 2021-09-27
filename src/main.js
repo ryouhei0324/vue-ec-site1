@@ -5,7 +5,10 @@ import store from './store'
 // import { initializeApp } from "firebase/app";
 import firebase from 'firebase/app'
 import vuetify from './plugins/vuetify'
+import Vuelidate from 'vuelidate'
 
+
+Vue.use(Vuelidate)
 Vue.config.productionTip = false
 
 const firebaseConfig = {
