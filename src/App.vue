@@ -41,7 +41,8 @@ export default ({
   },
   
   methods:{
-    ...mapActions(['login','logout','setLoginUser','deleteLoginUser','fetchItems']),
+    ...mapActions(["toggleSideMenu", "setLoginUser", "logout", "login", "deleteLoginUser",
+     "fetchItems","fetchCarts",'setCart']),
 
     test() {
     console.log(this.$store.state);
@@ -52,8 +53,10 @@ export default ({
     firebase.auth().onAuthStateChanged(user=>{
       if(user){
         this.setLoginUser(user);
+        this.setCart();
       }else{
-        this.deleteLoginUser
+        this.deleteLoginUser();
+
       }
     })
   },
