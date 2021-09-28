@@ -44,7 +44,6 @@
     <template>
         <div>消費税：{{taxP}}円</div>
         <div>ご注文金額合計：{{`${taxP+sumPrice}`}}円(税込)</div>
-        <button @click="checkOrLogin()" class='btnDig'>注文に進む</button> 
     </template>
     </template>
   </v-simple-table>
@@ -67,9 +66,11 @@ export default ({
 
         gP(){			
 		if(this.getCartItems){
-            console.log(this.getCartItems);
-            return this.getCartItems.concat()}	
-		else{return []}					
+            console.log(this.$store.state.cartItems);
+            return this.$store.state.cartItems}	
+		else{
+            console.log('商品がない');
+            return []}					
 		},
 
         topPrice(){

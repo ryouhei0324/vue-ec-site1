@@ -15,7 +15,7 @@ export default new Vuex.Store({
     toppingList:[],
     // firebaseトッピング情報
     
-    cartItems: {name:'いちご'},
+    cartItems:[],
     // カートに入ってる商品
 
     carts: [],
@@ -110,25 +110,25 @@ export default new Vuex.Store({
       }
     },
 
-setCartItemList({ getters, commit }, cartItemList ){
-  console.log(getters.uid);
+setCartItemList({ getters, commit }, cartItems ){
+  console.log(this.state.cartItems);
       if(getters.uid){        
         firebase
           .firestore()
           .collection(`users/${getters.uid}/carts`)
-          .doc(getters.getCartItems.id)
-          .update({ cartItemList })          
+          .doc(this.state.cartItems.id)
+          .update({ cartItemList:getters.getCartItems.cartItemList })          
           .then( () => {                      
-            commit("setCartItemList", cartItemList );
+            commit("setCartItemList", cartItems);
           });
       }else{ //ログインしてなくてもstoreに保存
         console.log('not login');
         
-        commit("setCartItemList", cartItemList );
+        commit("setCartItemList", cartItems );
       }
     },
     setCart({ getters, commit }) {
-      console.log('動いてます');
+      console.log('動いｔｒます');
       firebase
         .firestore()
         .collection(`users/${getters.uid}/carts`)

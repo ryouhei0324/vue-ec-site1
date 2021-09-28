@@ -132,16 +132,19 @@ computed:{
       //   price:  this.pSize, //Mサイズ or Lサイズの値段                
       // }),
 
-      let sCIL = this.getCartItems.CartItem ? this.getCartItems.CartItem.cartItemList.concat():[]
-        sCIL.push({
+      
+      console.log(this.getCartItems);
+      let ii=[]
+      ii.push(
+        this.getCartItems.cartItemList={
         pizzaid: this.$route.params.id, //選んだピザのid
         toppingid: this.tSelect, //選んだトッピングのid
         number: this.number, //個数
         price:  this.pSize, //Mサイズ or Lサイズ               
-      })
-      console.log(sCIL);
+        })
+      console.log(this.getCartItems);
 
-      this.setCartItemList(sCIL)
+      this.setCartItemList(ii)
       console.log(this.getCartItems);
       this.$router.push({ name: "Cart" }, () => {});
     },
